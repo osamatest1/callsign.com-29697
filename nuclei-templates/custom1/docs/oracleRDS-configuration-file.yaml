@@ -1,0 +1,27 @@
+id: oracleRDS-configuration-file
+info:
+  name: Oracle REST Data Services configurations File Exposure
+  author: osamahamad
+  severity: low
+  description: Oracle REST Data Services configurations 
+  tags: laravel,pyrogram
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/defaults.xml'
+      - '{{BaseURL}}/conf/defaults.xml'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'entry'
+          - 'db.hostname'
+          - 'db.port'
+          - 'jdbc'
+        condition: and
+        part: body

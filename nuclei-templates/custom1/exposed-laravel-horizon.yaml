@@ -1,0 +1,27 @@
+id: exposed-laravel-horizon
+info:
+  name: exposed-laravel-horizon
+  author: osamahamad
+  severity: low
+  description: Detects horizon.
+  tags: laravel,custom
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/horizon'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'horizon'
+          - 'jobs/completed'
+          - 'jobs/pending'
+          - 'metrics'
+          - 'dashboard'
+        condition: and
+        part: body

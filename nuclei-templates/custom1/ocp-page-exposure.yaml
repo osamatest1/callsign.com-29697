@@ -1,0 +1,27 @@
+id: ocp-page-exposure
+
+info:
+  name: ocp-page-exposure
+  author: osamahamad
+  severity: low
+  description: sensitive info.
+  reference:
+    - http://34.71.254.197:443/ocp.php
+    - https://github.com/mlazarov/ocp
+  tags: custom,exposure
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/'
+      - '{{BaseURL}}/ocp.php'
+
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - 'Opcache Control Panel'
+          - 'OCP'
+        condition: and

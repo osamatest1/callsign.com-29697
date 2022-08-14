@@ -1,0 +1,33 @@
+id: concrete5-Installation
+
+info:
+  name: Exposed concrete5 Installation
+  author: osamahamad
+  severity: low
+  description: https://documentation.concretecms.org/developers/introduction/installing-concrete-cms
+  reference: https://documentation.concretecms.org/developers/introduction/installing-concrete-cms
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/index.php/install"
+      - "{{BaseURL}}/concrete5/index.php/install"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - 'ccm-install-version'
+          - 'Install concrete5'
+          - 'Choose Language'
+          - 'backgroundimages.concrete5.org'
+          - 'concrete/images/logo.svg'
+        part: body 
+        condition: and 
+
+        
+      - type: word
+        words:
+          - 'text/html'
+        part: header 

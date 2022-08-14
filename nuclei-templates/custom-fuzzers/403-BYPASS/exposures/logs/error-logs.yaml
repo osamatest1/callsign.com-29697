@@ -1,0 +1,84 @@
+id: error-logs
+info:
+  name: common error log files
+  author: geeknik,daffainfo
+  severity: low
+  tags: logs,exposure,error
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/routes/error_log"
+      - "{{BaseURL}}/config/error_log"
+      - "{{BaseURL}}/error_log"
+      - "{{BaseURL}}/errors_log"
+      - "{{BaseURL}}/logs/error.log"
+      - "{{BaseURL}}/logs/errors.log"
+      - "{{BaseURL}}/log/error.log"
+      - "{{BaseURL}}/log/errors.log"
+      - "{{BaseURL}}/errors/errors.log"
+      - "{{BaseURL}}/error/error.log"
+      - "{{BaseURL}}/errors.log"
+      - "{{BaseURL}}/error.log"
+      - "{{BaseURL}}/error.txt"
+      - "{{BaseURL}}/errors.txt"
+      - "{{BaseURL}}/admin/logs/error.log"
+      - "{{BaseURL}}/admin/logs/errors.log"
+      - "{{BaseURL}}/admin/log/error.log"
+      - "{{BaseURL}}/admin/error.log"
+      - "{{BaseURL}}/admin/errors.log"
+      - "{{BaseURL}}/{{Hostname}}/error.log"
+      - "{{BaseURL}}/{{Hostname}}/errors.log"
+      - "{{BaseURL}}/MyErrors.log"
+      - "{{BaseURL}}/log.txt"
+      - "{{BaseURL}}/logs.txt"
+      - "{{BaseURL}}/log.log"
+      - "{{BaseURL}}/application/logs/application.log"
+      - "{{BaseURL}}/application/logs/default.log"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "Segmentation Fault"
+          - "coredump"
+          - "script headers"
+          - "Broken pipe"
+          - "Array"
+          - "Exception"
+          - "Fatal"
+        condition: or
+
+      - type: word
+        words:
+          - text/plain
+        part: header
+
+      - type: status
+        status:
+          - 200

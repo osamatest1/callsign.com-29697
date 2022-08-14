@@ -1,0 +1,62 @@
+id: yii-debugger
+
+info:
+  name: View Yii Debugger Information
+  author: geeknik
+  reference: https://yii2-framework.readthedocs.io/en/stable/guide/tool-debugger/
+  severity: low
+  tags: yii,debug,exposure
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/debug/default/view.html"
+      - "{{BaseURL}}/debug/default/view"
+      - "{{BaseURL}}/frontend/web/debug/default/view"
+      - "{{BaseURL}}/web/debug/default/view"
+      - "{{BaseURL}}/sapi/debug/default/view"
+
+    redirects: true
+    max-redirects: 2
+    stop-at-first-match: true
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+
+      - type: word
+        words:
+          - "<title>Yii Debugger</title>"
+          - "Status"
+          - "Route"
+          - "Log"
+          - "Time"
+          - "Memory"
+          - "DB"
+        condition: and

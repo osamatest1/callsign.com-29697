@@ -1,0 +1,74 @@
+id: shellscripts
+
+info:
+  name: Public shellscripts
+  author: panch0r3d
+  severity: low
+  tags: bash,exposure
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/.build.sh"
+      - "{{BaseURL}}/.jenkins.sh"
+      - "{{BaseURL}}/.travis.sh"
+      - "{{BaseURL}}/install.sh"
+      - "{{BaseURL}}/update.sh"
+      - "{{BaseURL}}/config.sh"
+      - "{{BaseURL}}/build.sh"
+      - "{{BaseURL}}/setup.sh"
+      - "{{BaseURL}}/run.sh"
+      - "{{BaseURL}}/backup.sh"
+      - "{{BaseURL}}/compile.sh"
+      - "{{BaseURL}}/env.sh"
+      - "{{BaseURL}}/init.sh"
+      - "{{BaseURL}}/startup.sh"
+      - "{{BaseURL}}/wp-setup.sh"
+      - "{{BaseURL}}/deploy.sh"
+      - "{{BaseURL}}/aws.sh"
+
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+
+      - type: word
+        words:
+          - "application/x-sh"
+          - "text/plain"
+          - "text/x-sh"
+        part: header
+        condition: or
+
+      - type: regex
+        regex:
+          - ".*?bin.*?sh"
+          - ".*?bin.*?bash"
+        part: body
+        condition: or

@@ -1,0 +1,28 @@
+id: readthedocs-configuration-file
+info:
+  name: Readthedocs Configuration Files Exposure
+  author: osamahamad
+  severity: low
+  description: Readthedocs Configuration Files Exposure
+  tags: laravel,readthedocs
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/.readthedocs.yaml'
+      - '{{BaseURL}}/readthedocs.yaml'
+      - '{{BaseURL}}/.readthedocs.yml'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'version:'
+          - 'build:'
+          - 'python:'
+          - 'os:'
+        condition: and
+        part: body

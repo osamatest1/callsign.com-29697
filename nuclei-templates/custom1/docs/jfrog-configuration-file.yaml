@@ -1,0 +1,27 @@
+id: jfrog-configuration-file
+info:
+  name: tomcat-users configuration File Exposure
+  author: osamahamad
+  severity: low
+  description: JFrog system.yaml file
+  tags: laravel,pyrogram
+  reference:
+    - https://www.jfrog.com/confluence/display/JFROG/System+YAML+Configuration+File
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/system.yaml'
+      - '{{BaseURL}}/artifactory/var/etc/system.yaml'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'shared'
+          - 'database'
+          - 'configVersion'
+          - 'security'
+        condition: and
+        part: body

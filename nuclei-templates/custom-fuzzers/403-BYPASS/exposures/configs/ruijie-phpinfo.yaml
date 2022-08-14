@@ -1,0 +1,50 @@
+id: ruijie-phpinfo
+
+info:
+  name: Ruijie Phpinfo
+  author: pikpikcu
+  severity: low
+  reference: https://github.com/PeiQi0/PeiQi-WIKI-POC/blob/PeiQi/PeiQi_Wiki/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87%E6%BC%8F%E6%B4%9E/%E9%94%90%E6%8D%B7/%E9%94%90%E6%8D%B7EG%E6%98%93%E7%BD%91%E5%85%B3%20phpinfo.view.php%20%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E.md
+  tags: phpinfo,rujjie,config,exposure,ruijie
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/tool/view/phpinfo.view.php"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "PHP Version"
+          - "PHP Extension"
+        condition: and
+
+      - type: status
+        status:
+          - 200

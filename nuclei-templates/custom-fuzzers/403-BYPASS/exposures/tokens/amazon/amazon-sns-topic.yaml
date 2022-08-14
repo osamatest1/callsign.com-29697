@@ -1,0 +1,42 @@
+id: amazon-sns-topic
+
+info:
+  name: Amazon SNS Topic Disclosure
+  author: Ice3man
+  severity: info
+  tags: exposure,token,amazon
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}"
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - 'arn:aws:sns:[a-z0-9\-]+:[0-9]+:[A-Za-z0-9\-_]+'

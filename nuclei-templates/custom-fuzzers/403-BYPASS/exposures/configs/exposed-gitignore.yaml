@@ -1,0 +1,64 @@
+id: exposed-gitignore
+
+info:
+  name: Exposed Gitignore
+  author: TheZakMan
+  severity: info
+  tags: config,git,exposure
+  reference:
+    - https://twitter.com/pratiky9967/status/1230001391701086208
+    - https://www.tenable.com/plugins/was/98595
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/.gitignore"
+      - "{{BaseURL}}/assets/.gitignore"
+      - "{{BaseURL}}/includes/.gitignore"
+
+    matchers-condition: and
+    matchers:
+      - type: dsl
+        dsl:
+          - 'len(body) > 50'
+          - 'status_code == 200'
+        condition: and
+
+      - type: word
+        words:
+          - "application/javascript"
+          - "application/json"
+          - "application/xml"
+          - "html"
+          - "<!doctype"
+          - "<script"
+          - "<meta"
+          - "image/"
+        part: all
+        negative: true
+        condition: or

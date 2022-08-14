@@ -1,0 +1,58 @@
+id: openredirect-mainpath-bypasses  
+
+info:
+  name: Open Redirect Fuzz
+  author: osamahamad
+  severity: low
+  reference: https://www.cyberick.com/post/open-redirect-and-its-bypasses
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}///;@example.com"
+      - "{{BaseURL}}/%09.example.com"
+      - "{{BaseURL}}/%3F.example.com"
+      - "{{BaseURL}}/example.com{{Hostname}}"
+      - "{{BaseURL}}/example.com{{Hostname}}/"
+      - "{{BaseURL}}//example.com{{Hostname}}/"
+      - "{{BaseURL}}/https://example.com?c=.{{Hostname}}"
+      - "{{BaseURL}}/%252Eexample.com"
+      - "{{BaseURL}}//{{Hostname}}@example.com"
+      - "{{BaseURL}}//%2F/example.com"
+      - "{{BaseURL}}/%0D/example.com"
+      - "{{BaseURL}}/\\/example.com"
+      - "{{BaseURL}}/%5Cexample.com"
+      - "{{BaseURL}}//evil%E3%80%82com"
+      - "{{BaseURL}}/%09{{BaseURL}}%40example.com"
+      - "{{BaseURL}}/%0D%0A/example.com"
+      - "{{BaseURL}}/?redirect={{BaseURL}}@example.com"
+      - "{{BaseURL}}/?redirect={{BaseURL}}%09.example.com"
+      - "{{BaseURL}}/?redirect={{BaseURL}}%3F.example.com"
+      - "{{BaseURL}}/?redirect={{BaseURL}}%2523.example.com"
+      - "{{BaseURL}}/?redirect=https://example.com?c=.{{Hostname}}"
+      - "{{BaseURL}}/?redirect={{BaseURL}}%252Eexample.com"
+      - "{{BaseURL}}/?redirect=//{{Hostname}}@example.com"
+      - "{{BaseURL}}/?redirect=//%2F/example.com"
+      - "{{BaseURL}}/?redirect=/%0D/example.com"
+      - "{{BaseURL}}/?redirect=/\\/example.com"
+      - "{{BaseURL}}/?redirect=/%5Cexample.com"
+      - "{{BaseURL}}/?redirect=//evil%E3%80%82com"
+      - "{{BaseURL}}/?redirect=%09http:///example.coc%40example.com"
+      - "{{BaseURL}}/?redirect=%0D%0A/example.com"
+
+    stop-at-first-match: true
+    matchers-condition: and
+    matchers:
+
+      - type: regex
+        part: header
+        regex:
+          - '(?m)^(?:Location\s*?:\s*?)(?:https?:\/\/|\/\/|\/\\\\|\/\\)?(?:[a-zA-Z0-9\-_\.@]*)example\.com\/?(\/|[^.].*)?$' # https://regex101.com/r/ZDYhFh/1
+
+      - type: status
+        status:
+          - 301
+          - 302
+          - 307
+          - 308
+        condition: or

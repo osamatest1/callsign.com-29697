@@ -1,0 +1,27 @@
+id: wso2-carboon-dashboard-fingerprint
+
+info:
+  name: wso2-carboon-dashboard-fingerprint
+  author: osamahamad
+  severity: low
+  description: RCE
+  reference:
+    - https://packetstormsecurity.com/files/167593/WordPress-Weblizar-8.9-Code-Execution.html
+  tags: config,custom
+
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/carbon/admin/login.jsp"
+
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - "WSO2 Carbon user"
+          - "docs.wso2.com"
+        part: body
+        condition: and

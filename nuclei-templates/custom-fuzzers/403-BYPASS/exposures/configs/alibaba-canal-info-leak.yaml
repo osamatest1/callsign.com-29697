@@ -1,0 +1,60 @@
+id: alibaba-canal-info-leak
+
+info:
+  name: Alibaba Canal Info Leak
+  author: pikpikcu
+  severity: info
+  tags: config,exposure,alibaba
+  reference:
+    - https://github.com/alibaba/canal/issues/632
+    - https://netty.io/wiki/reference-counted-objects.html
+    - https://my.oschina.net/u/4581879/blog/4753320
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/api/v1/canal/config/1/1"
+    headers:
+      Content-Type: application/json
+
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        words:
+          - "application/json"
+        condition: and
+        part: header
+      - type: word
+        words:
+          - "ncanal.aliyun.accessKey"
+          - "ncanal.aliyun.secretKey"
+        condition: and
+        part: body

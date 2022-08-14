@@ -1,0 +1,27 @@
+id: platformio-configuration-file
+info:
+  name: "platformio.ini" Project Configuration File Exposure
+  author: osamahamad
+  severity: low
+  description: This web host have a dashboard exposed to the public, this dashboard exposes internal information about Redis Queue Jobs, it monitors key metrics of your queue system such as job throughput, runtime, and job failures.
+  tags: laravel,custom
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/platformio.ini'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'env:'
+          - 'platform'
+          - 'jobs/pending'
+          - 'framework'
+          - 'board'
+        condition: and
+        part: body

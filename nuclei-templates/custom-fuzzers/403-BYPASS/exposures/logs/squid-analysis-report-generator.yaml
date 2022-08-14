@@ -1,0 +1,60 @@
+id: squid-analysis-report-generator
+
+info:
+  name: Squid Analysis Report Generator
+  author: geeknik
+  description: SARG is an open source tool that allows you to analyse the squid log files and generates beautiful reports in HTML format with information about users, IP addresses, top accessed sites, total bandwidth usage, elapsed time, downloads, access denied websites, daily reports, weekly reports and monthly reports.
+  reference: https://sourceforge.net/projects/sarg/
+  severity: high
+  tags: sarg,exposure,logs
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "Squid User Access Report"
+          - "Squid User's Access Report"
+        condition: or
+      - type: word
+        part: body
+        words:
+          - "<td>Daily reports"
+          - "FILE/PERIOD"
+        condition: or
+
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - sarg-[0-99].[0-99].[0-99]

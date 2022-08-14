@@ -1,0 +1,93 @@
+id: swagger-api
+
+info:
+  name: Public Swagger API
+  author: pdteam
+  severity: info
+  tags: exposure,api,swagger
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/swagger/ui/index"
+      - "{{BaseURL}}/swagger/index.html"
+      - "{{BaseURL}}/swagger-ui.html"
+      - "{{BaseURL}}/swagger/swagger-ui.html"
+      - "{{BaseURL}}/api/swagger-ui.html"
+      - "{{BaseURL}}/api-docs/swagger.json"
+      - "{{BaseURL}}/api-docs/swagger.yaml"
+      - "{{BaseURL}}/swagger.json"
+      - "{{BaseURL}}/swagger.yaml"
+      - "{{BaseURL}}/swagger/v1/swagger.json"
+      - "{{BaseURL}}/swagger/v1/swagger.yaml"
+      - "{{BaseURL}}/api/index.html"
+      - "{{BaseURL}}/api/docs/"
+      - "{{BaseURL}}/api/swagger.json"
+      - "{{BaseURL}}/api/swagger.yaml"
+      - "{{BaseURL}}/api/swagger.yml"
+      - "{{BaseURL}}/api/swagger/index.html"
+      - "{{BaseURL}}/api/swagger/swagger-ui.html"
+      - "{{BaseURL}}/api/api-docs/swagger.json"
+      - "{{BaseURL}}/api/api-docs/swagger.yaml"
+      - "{{BaseURL}}/api/swagger-ui/swagger.json"
+      - "{{BaseURL}}/api/swagger-ui/swagger.yaml"
+      - "{{BaseURL}}/api/apidocs/swagger.json"
+      - "{{BaseURL}}/api/apidocs/swagger.yaml"
+      - "{{BaseURL}}/api/swagger-ui/api-docs"
+      - "{{BaseURL}}/api/api-docs"
+      - "{{BaseURL}}/api/apidocs"
+      - "{{BaseURL}}/api/swagger"
+      - "{{BaseURL}}/api/swagger/static/index.html"
+      - "{{BaseURL}}/api/swagger-resources"
+      - "{{BaseURL}}/api/swagger-resources/restservices/v2/api-docs"
+      - "{{BaseURL}}/api/__swagger__/"
+      - "{{BaseURL}}/api/_swagger_/"
+      - "{{BaseURL}}/api/spec/swagger.json"
+      - "{{BaseURL}}/api/spec/swagger.yaml"
+      - "{{BaseURL}}/api/swagger/ui/index"
+      - "{{BaseURL}}/__swagger__/"
+      - "{{BaseURL}}/_swagger_/"
+      - "{{BaseURL}}/api/v1/swagger-ui/swagger.json"
+      - "{{BaseURL}}/api/v1/swagger-ui/swagger.yaml"
+      - "{{BaseURL}}/swagger-resources/restservices/v2/api-docs"
+
+    stop-at-first-match: true
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "swagger:"
+          - "Swagger 2.0"
+          - "\"swagger\":"
+          - "Swagger UI"
+          - "**token**:"
+        condition: or
+
+      - type: status
+        status:
+          - 200

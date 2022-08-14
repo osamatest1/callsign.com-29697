@@ -1,0 +1,22 @@
+id: sendgrid-env 
+
+info:
+  name: sendgrid envirmoent variables disclosure
+  author: osamahamad
+  severity: high
+  tags: file
+
+  
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/.env"
+      - "{{BaseURL}}/sendgrid.env"
+      - "{{BaseURL}}/.env_sample"
+      - "{{BaseURL}}/.sendgrid.env"
+
+    matchers:
+      - type: word
+        words:
+          - "SENDGRID_API_KEY"
+        part: body

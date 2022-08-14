@@ -1,0 +1,21 @@
+id: custom-github-edit-this-page
+
+info:
+  name: custom-github-edit-this-page
+  author: osamahamad
+  severity: low
+  description: Detects websites that have edit this page option 
+  tags: activescan
+
+requests:
+  - method: GET
+
+    path:
+      - "{{BaseURL}}"
+    
+    redirects: true
+    max-redirects: 2
+    matchers:
+      - type: word
+        words:
+          - '</i> Edit this page</a>'

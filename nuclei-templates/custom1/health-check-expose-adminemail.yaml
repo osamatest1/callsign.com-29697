@@ -1,0 +1,22 @@
+id: health-check-expose-adminemail
+
+info:
+  name: AEM DefaultGetServlet
+  author: osamahamad
+  severity: low
+  description: Sensitive information might be exposed via https://github.com/statsig-io/statuspage/blob/main/health-check.sh.
+  reference:
+    - https://github.com/statsig-io/statuspage/blob/main/health-check.sh
+  tags: custom,exposure
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/health-check.sh'
+
+    matchers:
+      - type: word
+        words:
+          - 'KEYSARRAY'
+          - 'URLSARRAY'
+        condition: and

@@ -1,0 +1,49 @@
+id: snyk-ignore-file-disclosure
+
+info:
+  name: Snyk Ignore File Disclosure
+  author: dhiyaneshDk
+  severity: info
+  reference: https://github.com/detectify/ugly-duckling/blob/master/modules/crowdsourced/snyk-ignore-file-disclosure.json
+  tags: exposure,files
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/.snyk"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities."
+        part: body
+
+      - type: status
+        status:
+          - 200

@@ -1,0 +1,34 @@
+id: litespeed-enviroment
+
+info:
+  name: Litespeed Enviroment
+  author: osamahamad
+  severity: high
+  reference: noreference
+  description: Litespeed Enviroment possible exposure
+  tags: custom
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+    cvss-score: 8.80
+    cve-id: CVE-2021-25646
+    cwe-id: CWE-732
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/usr/local/lsws/bin/lsws_env'
+      - '{{BaseURL}}/lsws_env'
+      - '{{BaseURL}}/lsws.env'
+      - '{{BaseURL}}/.lsws_env'
+      - '{{BaseURL}}/bin/lsws_env'
+      - '{{BaseURL}}/lsws/bin/lsws_env'
+      - '{{BaseURL}}/.lsws'
+      - '{{BaseURL}}/lsws.env'
+      - '{{BaseURL}}/opt/lsws/bin/lsws_env'
+
+    matchers:
+      - type: word
+        words:
+          - 'PIDFILE'
+          - 'GRACEFUL_PIDFILE'
+        condition: or

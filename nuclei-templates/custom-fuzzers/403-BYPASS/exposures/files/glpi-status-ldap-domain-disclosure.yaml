@@ -1,0 +1,58 @@
+id: glpi-status-domain-disclosure
+
+info:
+  name: GLPI Status Domain Disclosure
+  author: dogasantos
+  severity: info
+  tags: glpi,exposure,status
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/status.php"
+      - "{{BaseURL}}/glpi/status.php"
+      - "{{BaseURL}}/glpi2/status.php"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "GLPI_"
+          - "LDAP server"
+        condition: and
+
+      - type: status
+        status:
+          - 200
+
+    extractors:
+      - type: regex
+        part: body
+        group: 1
+        regex:
+          - '((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([a-zA-Z0-9]+(\.[a-zA-Z0-9]{2,3}){1,2}))'

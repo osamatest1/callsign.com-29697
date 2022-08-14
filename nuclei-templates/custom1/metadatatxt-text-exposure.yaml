@@ -1,0 +1,27 @@
+id: metadatatxt-text-exposure
+
+info:
+  name: metadatatxt-text-exposure
+  author: osamahamad
+  severity: low
+  description: sensitive info.
+  reference:
+    - http://dev-jane0.gravitational.io/metadata.txt
+    - https://xxx.xxx
+  tags: custom,exposure
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/metadata.txt'
+
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - 'ami'
+          - 'public-ipv4'
+          - 'kernel-id'
+        condition: and

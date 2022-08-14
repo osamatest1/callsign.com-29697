@@ -1,0 +1,43 @@
+id: zimbra-web-fingerprints
+
+info:
+  name: FingerprintHub Technology Fingerprint
+  author: osamahamad
+  severity: info
+  description: FingerprintHub Technology Fingerprint tests run in nuclei.
+  reference:
+    - https://github.com/0x727/FingerprintHub
+  classification:
+    cwe-id: CWE-200
+  tags: tech
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    redirects: true
+    max-redirects: 2
+
+    matchers-condition: or
+    matchers:
+      - type: word
+        name: zimbra
+        words:
+          - ImgZimbraIcon
+
+      - type: word
+        part: header
+        name: zimbra
+        words:
+          - "Set-Cookie: ZM_LOGIN_CSRF"
+
+      - type: word
+        name: zimbra
+        words:
+          - window._zimbramail
+
+      - type: word
+        name: zimbra
+        words:
+          - content="zimbra

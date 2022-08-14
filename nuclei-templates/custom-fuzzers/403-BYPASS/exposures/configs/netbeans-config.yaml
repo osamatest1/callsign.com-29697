@@ -1,0 +1,51 @@
+id: netbeans-config
+
+info:
+  name: Exposed Netbeans configuration
+  author: sbani
+  severity: info
+  description: Searches for a exposed Netbeans configuration
+  tags: netbeans,config,exposure
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/nbproject/project.properties"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "(?mi)^src.dir="
+          - "(?mi)^build.[a-zA-Z]+="
+          - "(?mi)^jar.[a-zA-Z]+="
+        condition: or
+
+      - type: status
+        status:
+          - 200

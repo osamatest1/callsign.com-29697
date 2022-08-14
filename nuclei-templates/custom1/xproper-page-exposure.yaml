@@ -1,0 +1,28 @@
+id: xproper-page-exposure
+
+info:
+  name: lamp-page-exposure
+  author: osamahamad
+  severity: low
+  description: sensitive info.
+  reference:
+    - https://github.com/kmvan/x-prober
+    - http://34.71.254.197:443/p.php
+  tags: custom,exposure
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/p.php'
+      - '{{BaseURL}}/x.php'
+      - '{{BaseURL}}/to/dist/prober.php'
+      - '{{BaseURL}}/prober.php'
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - 'Prober'
+          - 'x-prober'
+        condition: and

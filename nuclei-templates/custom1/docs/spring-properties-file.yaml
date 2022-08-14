@@ -1,0 +1,24 @@
+id: spring-properties-file
+info:
+  name: Properties Configuration
+  author: osamahamad
+  severity: low
+  description: spring-configuration-file
+  tags: spring,custom
+  reference:
+    - https://www.baeldung.com/spring-boot-yaml-vs-properties
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/resources/application.properties'
+      - '{{BaseURL}}/application.properties'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'spring.datasource'
+        condition: and
+        part: body

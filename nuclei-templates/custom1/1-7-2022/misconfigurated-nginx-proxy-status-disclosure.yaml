@@ -1,0 +1,27 @@
+id: misconfigurated-nginx-proxy-status-disclosure
+
+info:
+  name: misconfigurated-nginx-proxy-status-disclosure
+  author: osamahamad
+  severity: low
+  description: info disclosure
+  reference:
+    - https://twitter.com/_cyberkhalid/status/1521211811978440705/photo/1
+  tags: sqli,custom
+
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/#/../nginx_status"
+      - "{{BaseURL}}/#/../nginx_status/"
+      - "{{BaseURL}}/#/../../nginx_status"
+
+
+    redirects: true
+    max-redirects: 2
+    matchers:
+      - type: word
+        words:
+          - "Active connections"
+        part: body

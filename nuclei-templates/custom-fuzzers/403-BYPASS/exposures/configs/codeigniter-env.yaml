@@ -1,0 +1,60 @@
+id: codeigniter-env
+
+info:
+  name: Codeigniter .env file
+  author: emenalf
+  severity: high
+  tags: config,exposure,codeigniter
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/.env"
+      - "{{BaseURL}}/.env.dev.local"
+      - "{{BaseURL}}/.env.development.local"
+      - "{{BaseURL}}/.env.prod.local"
+      - "{{BaseURL}}/.env.production.local"
+      - "{{BaseURL}}/.env.local"
+      - "{{BaseURL}}/.env.example"
+      - "{{BaseURL}}/.env.stage"
+      - "{{BaseURL}}/.env.live"
+      - "{{BaseURL}}/.env_1"
+      - "{{BaseURL}}/.env.old"
+      - "{{BaseURL}}/.env_sample"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "(?m)^APP_(NAME|ENV|KEY|DEBUG|URL|PASSWORD)"
+          - "(?m)^DB_(HOST|PASSWORD|DATABASE)"
+        condition: or
+
+      - type: status
+        status:
+          - 200

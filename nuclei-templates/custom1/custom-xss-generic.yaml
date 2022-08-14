@@ -1,0 +1,30 @@
+id: custom-xss-generic
+info:
+  name: custom-xss-generic
+  author: osamahamad
+  severity: medium
+  description: xss via main url path
+  tags: custom
+  reference:
+    - https://xx.x
+    - https://xx.x
+
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/"<h1>asdxaxa</h1>'
+      - '{{BaseURL}}/%22%3Ch1%3Easdxaxa%3C%2Fh1%3E'
+
+    redirects: true
+    max-redirects: 3
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"<h1>asdxaxa</h1>'
+        part: body
+      - type: word
+        words:
+          - '"text/html'
+        part: header

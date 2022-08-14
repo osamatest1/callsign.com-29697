@@ -1,0 +1,26 @@
+id: kubernetes_metrics_bypass
+
+info:
+  name: kubernetes_metrics_bypass
+  author: osamahamad
+  severity: low
+  reference: https://github.com/projectdiscovery/nuclei-templates/blob/e281e5bf88d928cc4f9eee9d3f030069cbd8b56e/misconfiguration/kubernetes/kubernetes-metrics.yaml
+
+requests:
+  - raw:
+      - |
+        GET /metrics HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /metrics HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-For: 127.0.0.1
+        Accept: */*
+
+    req-condition: true
+    matchers:
+      - type: dsl
+        dsl:
+          - 'status_code_1 == 403 && contains(body_2, "namespace") && contains(body_2, "HELP") && contains(body_2, "TYPE") && contains(body_2, "kube")'

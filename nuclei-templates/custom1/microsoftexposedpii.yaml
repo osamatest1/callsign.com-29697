@@ -1,0 +1,25 @@
+id: microsoftexposedpii
+
+info:
+  name: Exposed PII via microsoft subdomain
+  author: osamahamad
+  severity: low
+  description: https://medium.com/@botami143/i-found-idor-vulnerability-at-microsoft-subdomain-b89b8777bf8d
+  reference: https://medium.com/@botami143/i-found-idor-vulnerability-at-microsoft-subdomain-b89b8777bf8d
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/api/v1/log/diagnostics"
+      - "{{BaseURL}}/v1/log/diagnostics"
+      - "{{BaseURL}}/log/diagnostics"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - 'ApplicationContext'
+          - 'contentEngine'
+        part: body 
+        condition: and 

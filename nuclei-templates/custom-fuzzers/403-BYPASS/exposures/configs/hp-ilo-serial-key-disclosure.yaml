@@ -1,0 +1,52 @@
+id: hp-ilo-serial-key-disclosure
+
+info:
+  name: HP ILO Serial Key Disclosure
+  author: dhiyaneshDk
+  severity: medium
+  reference: https://github.com/detectify/ugly-duckling/blob/master/modules/crowdsourced/hp-ilo-serial-key-disclosure.json
+  tags: exposure,config
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/xmldata?item=CpqKey"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "LTYPE"
+          - "LNAME"
+          - "KEY"
+        part: body
+        condition: and
+
+      - type: status
+        status:
+          - 200

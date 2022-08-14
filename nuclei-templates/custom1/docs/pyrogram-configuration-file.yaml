@@ -1,0 +1,25 @@
+id: pyrogram-configuration-file
+info:
+  name: Pyrogram Configuration File Exposure
+  author: osamahamad
+  severity: low
+  description: Pyrogram Configuration File Exposure
+  tags: laravel,pyrogram
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/config.ini'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - '[pyrogram]'
+          - 'api_id'
+          - 'api_hash'
+        condition: and
+        part: body

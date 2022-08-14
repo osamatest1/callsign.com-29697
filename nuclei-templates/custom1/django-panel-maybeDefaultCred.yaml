@@ -1,0 +1,34 @@
+id: django-panel-maybeDefaultCred
+
+info:
+  name: maybeDefaultCred django-panel
+  author: osamahamad
+  severity: low
+  reference: django-panel
+  description: |
+    custom
+    default
+  tags: custom
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+    cvss-score: 8.80
+    cve-id: CVE-2021-25646
+    cwe-id: CWE-732
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - 'viewers/login'
+          - 'username'
+          - 'password'
+          - '/static/admin'
+        part: body
+        condition: and

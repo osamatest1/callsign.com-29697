@@ -1,0 +1,20 @@
+id: moodle-login-fingerprint
+
+info:
+  name: moodle-login-fingerprint
+  author: osamahamad
+  severity: low
+  description: possible auth bypass via user- user and password bitnami 
+  tags: authbypass
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/login/index.php"
+
+    redirects: true 
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'MoodleSession'

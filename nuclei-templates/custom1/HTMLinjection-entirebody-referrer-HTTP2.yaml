@@ -1,0 +1,43 @@
+id: HTMLinjection-entirebody-referrer
+
+info:
+  name: HTMLinjection-referrer-entirebody
+  author: osamahamad
+  severity: high
+
+requests:
+  - raw:
+      - |
+        POST / HTTP/2
+        Host: {{Hostname}}
+        User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        Accept-Language: en-US,en;q=0.5
+        Accept-Encoding: gzip,deflate
+        Referer: {{BaseURL}}/<h1>osamahamad88893</h1>"/
+        Content-Type: text/xml
+        Content-Length: 112
+        Connection: close
+
+        <h1>osamahamad88893</h1>"/
+        
+        
+
+    redirects: true
+    max-redirects: 2
+    matchers:
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '<h1>osamahamad88893</h1>"/'
+        part: body
+
+      - type: word
+        words:
+          - "text/html"
+        part: header
+
+      - type: status
+        status:
+          - 200

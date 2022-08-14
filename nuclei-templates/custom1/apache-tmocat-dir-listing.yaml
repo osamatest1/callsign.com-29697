@@ -1,0 +1,20 @@
+id: apache-tmocat-dir-listing
+
+info:
+  name: Directory Listing in Apache Tomcat 5.x.x https://www.exploit-db.com/exploits/2061
+  author: _harleo,pentest_swissky
+  severity: low
+  tags: misc,generic
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/;index.jsp"
+      - "{{BaseURL}}/help/;help.do"
+    matchers:
+      - type: word
+        words:
+          - "Directory listing for"
+          - "Index of /"
+          - "[To Parent Directory]"
+          - "Directory: /"

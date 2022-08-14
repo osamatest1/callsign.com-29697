@@ -1,0 +1,27 @@
+id: AWStatsFullPathDisclosure
+
+info:
+  name: AWStatsFullPathDisclosure
+  author: osamahamad
+  severity: low
+  description: https://github.com/theyiyibest/AWStatsFullPathDisclosure
+  reference: https://github.com/theyiyibest/AWStatsFullPathDisclosure
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/cgi-bin/awstats.pl?framename=mainright&update=123123123123"
+      - "{{BaseURL}}/awstats.pl?framename=mainright&update=123123123123"
+
+    matchers:
+      - type: word
+        words:
+          - 'awstats'
+          - 'cgi-bin'
+          - 'docs'
+          - 'config'
+          - 'denied'
+
+        part: body 
+        condition: and 

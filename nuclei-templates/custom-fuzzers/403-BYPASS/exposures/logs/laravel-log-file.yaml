@@ -1,0 +1,59 @@
+id: laravel-log-file
+
+info:
+  name: Laravel log file publicly accessible
+  author: sheikhrishad,geeknik
+  severity: high
+  description: The log file of this Laravel web app might reveal details on the inner workings of the app, possibly even tokens, credentials or personal information.
+  reference: https://laravel.com/docs/master/logging
+  tags: laravel,logs,exposure
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/storage/logs/laravel.log"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "InvalidArgumentException"
+          - "local.ERROR"
+          - "ErrorException"
+          - "syntax error"
+        condition: or
+      - type: word
+        part: header
+        words:
+          - "text/plain"
+          - "text/x-log"
+        condition: or
+      - type: status
+        status:
+          - 200

@@ -1,0 +1,18 @@
+id: drupal-openredirect
+
+info:
+  name: Drupal Open Redirect https://portswigger.net/research/practical-web-cache-poisoning
+  author: osamahamad
+  severity: low
+  tags: openredirect
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}//?destination=https://evil.net\\@{{Hostname}}/"
+
+    matchers:
+      - type: word
+        part: header
+        words:
+          - "Location: https://evil.net"

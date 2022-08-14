@@ -1,0 +1,71 @@
+id: default-sql-dump
+
+info:
+  name: MySQL Dump Files
+  author: geeknik,dwisiswant0
+  severity: medium
+  tags: exposure,backup,mysql
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/1.sql"
+      - "{{BaseURL}}/backup.sql"
+      - "{{BaseURL}}/database.sql"
+      - "{{BaseURL}}/data.sql"
+      - "{{BaseURL}}/db_backup.sql"
+      - "{{BaseURL}}/dbdump.sql"
+      - "{{BaseURL}}/db.sql"
+      - "{{BaseURL}}/dump.sql"
+      - "{{BaseURL}}/{{Hostname}}.sql"
+      - "{{BaseURL}}/{{Hostname}}_db.sql"
+      - "{{BaseURL}}/localhost.sql"
+      - "{{BaseURL}}/mysqldump.sql"
+      - "{{BaseURL}}/mysql.sql"
+      - "{{BaseURL}}/site.sql"
+      - "{{BaseURL}}/sql.sql"
+      - "{{BaseURL}}/temp.sql"
+      - "{{BaseURL}}/translate.sql"
+      - "{{BaseURL}}/users.sql"
+      - "{{BaseURL}}/wp-content/uploads/dump.sql"
+    headers:
+      Range: "bytes=0-3000"
+
+    max-size: 2000 # Size in bytes - Max Size to read from server response
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "(?m)(?:DROP|CREATE|(?:UN)?LOCK) TABLE|INSERT INTO"
+        part: body
+
+      - type: status
+        status:
+          - 200
+          - 206
+        condition: or

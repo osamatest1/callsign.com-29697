@@ -1,0 +1,25 @@
+id: grafana-custom-detection
+info:
+  name: grafana-custom-detection
+  author: osamahamad
+  severity: low
+  description: Detects grafana.
+  tags: grafana,custom
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/api/user/signup/options'
+      - '{{BaseURL}}/app/api/user/signup/options'
+      - '{{BaseURL}}:3000/api/user/signup/options'
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'verifyEmailEnabled'
+          - 'autoAssignOrg'
+        condition: and
+        part: body

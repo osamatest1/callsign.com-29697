@@ -1,0 +1,22 @@
+id: statuspageio-broken-page-link
+info:
+  name: statuspageio
+  author: osamahamad
+  severity: low
+  description: XSS
+  tags: statuspageio,custom
+  reference:
+    - https://xxx.xxx
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - "status and incident communication tool. Keep customers and employees informed during downtime to build trust and cut support costs."
+        part: body

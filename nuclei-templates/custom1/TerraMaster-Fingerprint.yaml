@@ -1,0 +1,31 @@
+id: TerraMaster-Fingerprint
+info:
+  name: TerraMaster-Fingerprint
+  author: osamahamad
+  severity: low
+  description: RCE
+  tags: goaccess,custom
+  reference:
+    - https://www.shodan.io/search?query=%22X-Powered-By%3A+TerraMaster%22
+    - https://octagon.net/blog/2022/03/07/cve-2022-24990-terrmaster-tos-unauthenticated-remote-command-execution-via-php-object-instantiation/
+    - https://github.com/go-gitea/gitea/pull/12612
+
+requests:
+  - method: GET
+    path:
+      - "http://{{Hostname}}:8181/tos/"
+      - "{{BaseURL}}"
+      - "{{BaseURL}}/tos/"
+
+    redirects: true
+    max-redirects: 3
+    matchers-condition: or
+    matchers:
+      - type: word
+        words:
+          - "TerraMaster"
+        part: body
+      - type: word
+        words:
+          - "X-Powered-By: TerraMaster"
+        part: body

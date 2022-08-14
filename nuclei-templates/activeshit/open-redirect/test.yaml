@@ -1,0 +1,32 @@
+id: activescan-SSRF  
+
+info:
+  name: Open Redirect Fuzz Scraped URLS
+  author: osamahamad
+  severity: low
+  reference: https://www.cyberick.com/post/open-redirect-and-its-bypasses
+
+requests:
+  - method: GET
+    path:
+      - "{{openredirectParameters}}"
+
+    payloads:
+      openredirectParameters: 1.txt
+    
+    redirects: true
+    max-redirects: 5
+    matchers:
+
+      - type: regex
+        part: header
+        regex:
+          - '(?m)^(?:Location\s*?:\s*?)(?:https?:\/\/|\/\/|\/\\\\|\/\\)?(?:[a-zA-Z0-9\-_\.@]*)example\.com\/?(\/|[^.].*)?$' # https://regex101.>
+
+      - type: status
+        status:
+          - 301
+          - 302
+          - 307
+          - 308
+        condition: or

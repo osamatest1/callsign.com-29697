@@ -1,0 +1,25 @@
+id: tomcatusers-configuration-file
+info:
+  name: tomcat-users configuration File Exposure
+  author: osamahamad
+  severity: low
+  description: Oracle REST Data Services configurations 
+  tags: laravel,pyrogram
+  reference:
+    - https://nevermind.com
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/tomcat-users.xml'
+      - '{{BaseURL}}/conf/tomcat-users.xml'
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - '<tomcat-users'
+          - '</tomcat-users'
+        condition: and
+        part: body

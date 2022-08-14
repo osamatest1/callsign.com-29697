@@ -1,0 +1,22 @@
+id: cname-service
+
+info:
+  name: CNAME Service Detection
+  author: pdteam
+  severity: low
+  description: A CNAME service was detected.
+  reference:
+    - https://ns1.com/resources/cname
+  classification:
+    cwe-id: CWE-200
+  tags: dns,service
+
+dns:
+  - name: "{{FQDN}}"
+    type: CNAME
+
+    matchers:
+      - type: word
+        name: odoo
+        words:
+          - "odoo.com"

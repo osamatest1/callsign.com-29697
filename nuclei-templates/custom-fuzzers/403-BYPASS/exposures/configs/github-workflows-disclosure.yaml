@@ -1,0 +1,79 @@
+id: github-workflows-disclosure
+
+info:
+  name: Github Workflow Disclosure
+  author: dhiyaneshDk,geeknik
+  severity: medium
+  reference: https://github.com/detectify/ugly-duckling/blob/master/modules/crowdsourced/github-workflows-disclosure.json
+  tags: exposure,config
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/.github/workflows/ci.yml"
+      - "{{BaseURL}}/.github/workflows/ci.yaml"
+      - "{{BaseURL}}/.github/workflows/CI.yml"
+      - "{{BaseURL}}/.github/workflows/main.yml"
+      - "{{BaseURL}}/.github/workflows/main.yaml"
+      - "{{BaseURL}}/.github/workflows/build.yml"
+      - "{{BaseURL}}/.github/workflows/build.yaml"
+      - "{{BaseURL}}/.github/workflows/test.yml"
+      - "{{BaseURL}}/.github/workflows/test.yaml"
+      - "{{BaseURL}}/.github/workflows/tests.yml"
+      - "{{BaseURL}}/.github/workflows/tests.yaml"
+      - "{{BaseURL}}/.github/workflows/release.yml"
+      - "{{BaseURL}}/.github/workflows/publish.yml"
+      - "{{BaseURL}}/.github/workflows/deploy.yml"
+      - "{{BaseURL}}/.github/workflows/push.yml"
+      - "{{BaseURL}}/.github/workflows/lint.yml"
+      - "{{BaseURL}}/.github/workflows/coverage.yml"
+      - "{{BaseURL}}/.github/workflows/release.yaml"
+      - "{{BaseURL}}/.github/workflows/pr.yml"
+      - "{{BaseURL}}/.github/workflows/automerge.yml"
+      - "{{BaseURL}}/.github/workflows/docker.yml"
+      - "{{BaseURL}}/.github/workflows/ci-generated.yml"
+      - "{{BaseURL}}/.github/workflows/ci-push.yml"
+      - "{{BaseURL}}/.github/workflows/ci-daily.yml"
+      - "{{BaseURL}}/.github/workflows/ci-issues.yml"
+      - "{{BaseURL}}/.github/workflows/smoosh-status.yml"
+      - "{{BaseURL}}/.github/workflows/snyk.yml"
+
+    matchers-condition: and
+    matchers:
+      - type: regex
+        regex:
+          - "(?m)^\\s*\"?on\"?:"
+          - "(?m)^\\s*\"?jobs\"?:"
+          - "(?m)^\\s*\"?steps\"?:"
+          - "(?m)^\\s*- \"?uses\"?:"
+        part: body
+        condition: and
+
+      - type: status
+        status:
+          - 200

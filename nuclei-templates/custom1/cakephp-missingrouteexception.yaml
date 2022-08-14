@@ -1,0 +1,24 @@
+id: cakephp-missingrouteexception
+info:
+  name: cakephp-missingrouteexception
+  author: osamahamad
+  severity: low
+  description: Based on another default configuration
+  tags: wordpress,custom
+  reference:
+    - https://makeready.chargepoint.com/index.php?xaxa=xaxa
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/index.php?xaxa=xaxa"
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - 'cakephp.org'
+          - 'MissingRouteException'
+        condition: and
+        part: body

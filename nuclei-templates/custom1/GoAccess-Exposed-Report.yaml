@@ -1,0 +1,68 @@
+id: GoAccess-Exposed-Report
+info:
+  name: GoAccess-Exposed-Report
+  author: osamahamad
+  severity: low
+  description: XSS
+  tags: goaccess,custom
+  reference:
+    - https://gist.github.com/osamahamad/5e32e0c12ac18355e1ca35705f816bf7
+    - https://github.com/go-gitea/gitea/pull/12610
+    - https://github.com/go-gitea/gitea/pull/12612
+
+requests:
+  - method: GET
+    headers:
+
+      X-Forwarded-For: 127.0.0.1
+
+    path:
+      - "http://{{Hostname}}:7890/goaccess"
+      - "http://{{Hostname}}:7891/goaccess"
+      - "http://{{Hostname}}:7890/"
+      - "http://{{Hostname}}:7890/json"
+      - "{{BaseURL}}/stats/goaindex.html"
+      - "{{BaseURL}}/goaccess"
+      - "{{BaseURL}}/goaccess.html"
+      - "{{BaseURL}}/goaccess_csv_report.csv"
+      - "{{BaseURL}}/report.csv"
+      - "{{BaseURL}}/json"
+      - "{{BaseURL}}/report.json"
+      - "{{BaseURL}}/report.html"
+      - "{{BaseURL}}/report.html"
+      - "{{BaseURL}}/report.html"
+      - "{{BaseURL}}/"
+
+    redirects: true
+    max-redirects: 3
+    matchers-condition: or
+    matchers:
+      - type: word
+        words:
+          - "GoAccess"
+          - "Overall Analyzed Requests"
+        condition: and
+        part: body
+      - type: word
+        words:
+          - "visitors"
+          - "static_requests"
+          - "browsers"
+          - "referring_sites"
+          - "keyphrases"
+          - "geolocation"
+        condition: and
+        part: body
+      - type: word
+        words:
+          - "method"
+          - "protocol"
+          - "data"
+          - "visitors"
+          - "bytes"
+          - "hits"
+          - "log_path"
+          - "valid_requests"
+          - "total_requests"
+        condition: and
+        part: body

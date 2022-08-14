@@ -1,0 +1,23 @@
+id: apache-serverstatus-exposureviatraversal
+
+info:
+  name: apache-serverstatus-exposureviatraversal
+  author: osamahamad
+  severity: low
+  description: Detects exposed apache server status
+  tags: custom
+
+requests:
+  - method: GET
+
+    path:
+      - "{{BaseURL}}/api../server-status"
+    
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - "Apache Server Status"
+          - "Server Version"
+        condition: and

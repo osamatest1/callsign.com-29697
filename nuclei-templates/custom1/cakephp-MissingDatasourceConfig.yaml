@@ -1,0 +1,24 @@
+id: cakephp-MissingDatasourceConfig
+info:
+  name: cakephp-MissingDatasourceConfig
+  author: osamahamad
+  severity: low
+  description: Based on another default configuration
+  tags: wordpress,custom
+  reference:
+    - https://makeready.chargepoint.com/index.php?xaxa=xaxa
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/debug-kit/panels/"
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        words:
+          - 'cakephp.org'
+          - 'Missing Datasource Configuration'
+        condition: and
+        part: body

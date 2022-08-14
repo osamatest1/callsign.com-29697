@@ -1,0 +1,68 @@
+id: wadl-api
+
+info:
+  name: wadl file disclosure
+  author: 0xrudra,manuelbua
+  severity: info
+  tags: exposure,api
+  reference:
+    - https://github.com/dwisiswant0/wadl-dumper
+    - https://www.nopsec.com/leveraging-exposed-wadl-xml-in-burp-suite/
+
+requests:
+  - method: GET
+    headers:
+      Proxy-Host: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+    path:
+      - "{{BaseURL}}/application.wadl"
+      - "{{BaseURL}}/application.wadl?detail=true"
+      - "{{BaseURL}}/api/application.wadl"
+      - "{{BaseURL}}/api/v1/application.wadl"
+      - "{{BaseURL}}/api/v2/application.wadl"
+
+    stop-at-first-match: true
+    matchers:
+      - name: http-get
+        type: word
+        words:
+          - "This is simplified WADL with user and core resources only"
+          - "http://jersey.java.net"
+          - "http://wadl.dev.java.net/2009/02"
+
+  - method: OPTIONS
+    path:
+      - "{{BaseURL}}"
+      - "{{BaseURL}}/api/v1"
+      - "{{BaseURL}}/api/v2"
+
+    stop-at-first-match: true
+    matchers:
+      - name: http-options
+        type: word
+        words:
+          - "This is simplified WADL with user and core resources only"
+          - "http://jersey.java.net"
+          - "http://wadl.dev.java.net/2009/02"

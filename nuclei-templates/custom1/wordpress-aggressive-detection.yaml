@@ -1,0 +1,29 @@
+id: wordpress-aggressive-detection
+
+info:
+  author: osamahamad
+  name: wordpress-detect
+  severity: info
+  reference: https://github.com/incogbyte/quickpress/blob/master/core/req.go
+  tags: wordpress,custom
+
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/wp/"
+      - "{{BaseURL}}/blog/"
+      - "{{BaseURL}}/news/"
+      - "{{BaseURL}}/publish/"
+      - "{{BaseURL}}/WORDPRESS/"
+      - "{{BaseURL}}/wp-staging/"
+      - "{{BaseURL}}/wordpress-staging/"
+      - "{{BaseURL}}/wordpress/"
+
+    redirects: true
+    max-redirects: 3
+    matchers:
+      - type: word
+        part: body
+        words:
+          - "wp-content/plugins"

@@ -1,0 +1,26 @@
+id: 3rdparty-idor-unsubscribe
+info:
+  name: statuspageio
+  author: osamahamad
+  severity: low
+  description: XSS
+  tags: statuspageio,custom
+  reference:
+    - https://wpscan.com/vulnerability/2c3f9038-632d-40ef-a099-6ea202efb550
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/customer/email_preferences"
+      - "{{BaseURL}}/form"
+      
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - 'Update Your Communication Preferences'
+          - 'We are sorry to see you go! Please update your communication preferences'
+        condition: and
+        part: body

@@ -1,0 +1,121 @@
+id: nginx-cache-purge
+info:
+  name: Unauthenticated cache purge
+  author: osamahamad
+  severity: low
+  description: nginx-cache-purge
+  tags: nginx,custom
+  reference:
+    - https://growth.monday.com/purge/
+
+requests:
+  - raw:
+      - |
+        GET /checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_cached/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_cached_prx/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_index/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_prod/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_cate/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/hd/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/mem/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/ssd/checktterer HTTP/1.1
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_cached/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_cached_prx/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_index/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_prod/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge_cate/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/hd/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/mem/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+      - |
+        GET /purge/ssd/checktterer HTTP/2
+        Host: {{Hostname}}
+        Accept: */*
+
+    redirects: true
+    max-redirects: 4
+    matchers:
+      - type: word
+        words:
+          - '<title>Successful purge</title>'
+          - '<center><h1>Successful purge</h1>'
+        condition: and
+        part: body
